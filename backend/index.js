@@ -1,8 +1,6 @@
 const express = require("express");
 const { connection } = require("./config/db");
-const { authentication } = require("./middlewares/auth.middleware");
 const { validator } = require("./middlewares/validator.middleware");
-const { todoRoutes } = require("./Routes/todos.middleware");
 const { userRoutes } = require("./Routes/User.routes");
 require("dotenv").config();
 
@@ -19,9 +17,6 @@ app.get("/", (req,res) => {
 
 app.use(validator);
 app.use("/", userRoutes);
-
-app.use(authentication);
-app.use("/todos",todoRoutes)
 
 
 
