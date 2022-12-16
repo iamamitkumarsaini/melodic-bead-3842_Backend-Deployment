@@ -4,13 +4,13 @@ const { validator } = require("./middlewares/validator.middleware");
 const { userRoutes } = require("./Routes/User.routes");
 require("dotenv").config();
 const cors = require("cors");
-
-
+const { productRoutes } = require("./Routes/Product.routes");
 
 
 
 const app = express();
-app.use(cors());
+app.use(cors())
+
 
 app.use(express.json());
 
@@ -19,8 +19,11 @@ app.get("/", (req,res) => {
 })
 
 
+
+
 app.use(validator);
 app.use("/", userRoutes);
+app.use("/products",productRoutes)
 
 
 
