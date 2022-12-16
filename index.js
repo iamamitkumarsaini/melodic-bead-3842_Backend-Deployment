@@ -3,10 +3,14 @@ const { connection } = require("./config/db");
 const { validator } = require("./middlewares/validator.middleware");
 const { userRoutes } = require("./Routes/User.routes");
 require("dotenv").config();
+const cors = require("cors");
+
+
 
 
 
 const app = express();
+app.use(cors());
 
 app.use(express.json());
 
