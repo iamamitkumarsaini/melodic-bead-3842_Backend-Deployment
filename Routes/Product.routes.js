@@ -7,28 +7,14 @@ const productRoutes = express.Router();
 
 
 productRoutes.get("/",async (req,res) => {
-    console.log(req.query)
 
     const searched = req.query.search;
     const sortBy = req.query.sortby;
     const page = Number(req.query.page);
     const limitBy = Number(req.query.limit) || 10;
 
-    if(searched){
 
-        try {
-            const products = await ProductModel.find({title:{$regex:searched,$options:'i'}})
-            res.send(products)
-        } 
-        
-        catch (err){
-            console.log(err)
-            res.send({"Message":"Something Went Wrong, searched After Sometimes"})
-        }
-    }
-
-
-    else if(searched && page && limitBy){
+     if(searched && page && limitBy){
 
         try {
             const products = await ProductModel.find({title:{$regex:searched,$options:'i'}}).skip((page-1)*1).limit(limitBy)
@@ -52,6 +38,19 @@ productRoutes.get("/",async (req,res) => {
         catch (err) {
             console.log(err)
             res.send({"Messsage":"Something Went Wrong"})
+        }
+    }
+
+    else if(searched){
+
+        try {
+            const products = await ProductModel.find({title:{$regex:searched,$options:'i'}})
+            res.send(products)
+        } 
+        
+        catch (err){
+            console.log(err)
+            res.send({"Message":"Something Went Wrong, searched After Sometimes"})
         }
     }
 
@@ -92,6 +91,26 @@ productRoutes.get("/",async (req,res) => {
     }
    }
 })
+
+
+productRoutes.get("/:id", async(req,res) => {
+    
+
+    try {
+        const productID = req.params.id
+        const products = await ProductModel.findById({_id:productID})
+        res.send(products)
+    } 
+    
+    catch (err) {
+        console.log(err)
+            res.send({"Message":"Something Went Wrong, Try After Sometimes"})
+    }
+})
+
+
+
+
 
 
 productRoutes.post("/add", async(req,res) => {
