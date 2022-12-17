@@ -7,7 +7,80 @@ const productRoutes = express.Router();
 
 
 productRoutes.get("/",async (req,res) => {
+    console.log(req.query)
+
+    const searched = req.query.search;
+    const sortBy = req.query.sortby;
+    const page = Number(req.query.page);
+    const limitBy = Number(req.query.limit) || 10;
+
+    if(searched){
+
+        try {
+            const products = await ProductModel.find({title:{$regex:searched,$options:'i'}})
+            res.send(products)
+        } 
+        
+        catch (err){
+            console.log(err)
+            res.send({"Message":"Something Went Wrong, searched After Sometimes"})
+        }
+    }
+
+
+    else if(searched && page && limitBy){
+
+        try {
+            const products = await ProductModel.find({title:{$regex:searched,$options:'i'}}).skip((page-1)*1).limit(limitBy)
+            res.send(products)
+        } 
+        
+        catch (err){
+            console.log(err)
+            res.send({"Message":"Something Went Wrong, searched After Sometimes"})
+        }
+    }
+
+    else if (page && limitBy){
+
+        try {
+            const products = await ProductModel.find().skip((page-1)*1).limit(limitBy)
+            console.log("pagination Success");
+            res.send(products);
+        }
+        
+        catch (err) {
+            console.log(err)
+            res.send({"Messsage":"Something Went Wrong"})
+        }
+    }
+
+
+    else if(sortBy){
+
+        try {
+            if(sortBy == "asc"){
+             const products = await ProductModel.find().sort({price:1})
+             res.send(products)
+            }
+ 
+            else if(sortBy == "desc"){
+             const products = await ProductModel.find().sort({price:-1})
+             res.send(products)
+            }
+            else res.send("error")
+             
+         }
+ 
+         catch (err) {
+             console.log(err)
+             res.send({"Message":"Something Went Wrong, sort the data After Sometimes"})
+     
+         }
+    }
     
+   else{
+
     try {
         const products = await ProductModel.find();
         res.send(products)
@@ -17,6 +90,7 @@ productRoutes.get("/",async (req,res) => {
         console.log(err)
             res.send({"Message":"Something Went Wrong, Try After Sometimes"})
     }
+   }
 })
 
 
