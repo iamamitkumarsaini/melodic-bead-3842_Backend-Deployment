@@ -41,6 +41,29 @@ productRoutes.get("/",async (req,res) => {
         }
     }
 
+    else if(searched && sortBy){
+
+        try {
+            if(sortBy == "asc"){
+                const products = await ProductModel.find({title:{$regex:searched,$options:'i'}}).sort({price:1})
+                res.send(products)
+               }
+
+               else if(sortBy == "desc"){
+                const products = await ProductModel.find({title:{$regex:searched,$options:'i'}}).sort({price:-1})
+                res.send(products)
+               }
+
+               else res.send({"Message":"Something Went Wrong, searched After Sometimes"})
+            
+        } 
+        
+        catch (error) {
+            console.log(err)
+            res.send({"Message":"Something Went Wrong, searched After Sometimes"})
+        }
+    }
+
     else if(searched){
 
         try {
@@ -67,7 +90,7 @@ productRoutes.get("/",async (req,res) => {
              const products = await ProductModel.find().sort({price:-1})
              res.send(products)
             }
-            else res.send("error")
+            else res.send({"Message":"Something Went Wrong, searched After Sometimes"})
              
          }
  
