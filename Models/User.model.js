@@ -10,7 +10,8 @@ const userSchema = mongoose.Schema({
     address:String,
     country:String,
     state:String,
-    pincode:String
+    pincode:String,
+    phone:String
 
 }, {
     versionKey:false

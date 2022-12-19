@@ -84,4 +84,20 @@ userRoutes.post("/login", async(req,res) => {
 })
 
 
+userRoutes.patch("/orderdetails/:userID", async(req,res) => {
+    
+    try {
+        const userID = req.params.userID;
+        const payload = req.body;
+        await UserModel.findByIdAndUpdate(userID,payload);
+        res.send({"Message": "Edited Successfully", payload})
+    } 
+    
+    catch (error) {
+        console.log(err)
+        res.send({"Message":"Error while editing Data"})
+    }
+})
+
+
 module.exports = { userRoutes };
