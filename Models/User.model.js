@@ -6,6 +6,12 @@ const userSchema = mongoose.Schema({
     password:String,
     number:String,
     usertype:String,
+    apartment:String,
+    address:String,
+    country:String,
+    state:String,
+    pincode:String
+
 }, {
     versionKey:false
 })
