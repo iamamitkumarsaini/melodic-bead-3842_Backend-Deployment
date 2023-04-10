@@ -1,2 +1,3 @@
 # Backend Side of Gadgetbest.com
-This Website is similar to any E-commerce Website. This is the backend code for an E-commerce Website which I build with a team of 4.
+### This is a replica of Gearbest
+Gadgetbest is an online E-commerce website that specializes in consumer electronics and gadgets, offering a wide range of products. 
