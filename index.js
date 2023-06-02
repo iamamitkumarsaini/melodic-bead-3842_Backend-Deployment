@@ -9,9 +9,13 @@ const { productRoutes } = require("./Routes/Product.routes");
 
 
 const app = express();
+// app.use(cors({
+//     origin:"*"
+// }))
+
 app.use(cors({
-    origin:"*"
-}))
+  origin: ["http://localhost:4200", "*"]
+}));
 
 
 app.use(express.json());
